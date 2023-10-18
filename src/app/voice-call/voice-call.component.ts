@@ -51,6 +51,11 @@ export class VoiceCallComponent implements OnInit {
     this.voiceCallService.getSignature().subscribe((res:any)=>{
       this.signature = res.signature
     })
+    const element = document.getElementById('zmmtg-root');
+    if (element) {
+      element.style.zIndex = (-2).toString();
+      element.style.background = 'none'
+    }
   }
 
   getAccessToken() {
@@ -97,6 +102,7 @@ export class VoiceCallComponent implements OnInit {
        const element = document.getElementById('zmmtg-root');
         if (element !== null) {
           element.style.display = 'block';
+          element.style.zIndex = (0).toString();
         }
         ZoomMtg.init({
           leaveUrl: this.leaveUrl,
@@ -109,7 +115,7 @@ export class VoiceCallComponent implements OnInit {
               meetingNumber: meetConfig.meetingNumber,
               userName: meetConfig.userName,
               userEmail: meetConfig.userEmail,
-              sdkKey:meetConfig.apiSecret,
+              sdkKey:meetConfig.apiKey,
               passWord:meetConfig.passWord,
               success: (success:any) => {
                 console.log(success)
