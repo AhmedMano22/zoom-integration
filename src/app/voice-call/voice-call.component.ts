@@ -74,14 +74,11 @@ export class VoiceCallComponent implements OnInit {
       this.meetingURL = this.meetingData.start_url;
       this.urlValue = this.meetingData.join_url;
       this.meetingNumber = this.meetingData.id
-      const meetlink = document.getElementById("meetlink");
-      const zoomMeetingFrame = document.getElementById("zoomMeetingFrame");
-      console.log( this.urlValue);
 
       })
       const meetConfig = {
-        apiKey:'xRgxdaNXTZeWxVWwSi_x8w',  // Use api key above mentioned.
-        apiSecret: 'Md0oKwAmc2IodKJ348au3nArgcci7wc9', // Use secret key above mentioned.
+        apiKey:'xRgxdaNXTZeWxVWwSi_x8w',
+        apiSecret: 'Md0oKwAmc2IodKJ348au3nArgcci7wc9',
         meetingNumber: this.meetingNumber,
         userName : 'Amr Matar',
         userEmail:'amrweb@gmail.com',

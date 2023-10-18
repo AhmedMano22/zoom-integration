@@ -30,11 +30,13 @@
               }
             ],
             "styles": [
-              "src/styles.css",
               "node_modules/@zoomus/websdk/dist/css/bootstrap.css",
-              "node_modules/@zoomus/websdk/dist/css/react-select.css"
+              "node_modules/@zoomus/websdk/dist/css/react-select.css",
+              "src/styles.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js"
+            ],
             "allowedCommonJsDependencies": [
               "@zoomus/websdk"
            ]
