@@ -8,7 +8,7 @@ import { ZoomMtg } from '@zoomus/websdk';
   templateUrl: './voice-call.component.html',
   styleUrls: ['./voice-call.component.css'],
 })
-export class VoiceCallComponent implements OnInit, AfterContentInit {
+export class VoiceCallComponent implements OnInit {
   private readonly DEFAULT_USER_NAME = 'Amr Matar';
   private readonly DEFAULT_USER_EMAIL = 'amrweb@gmail.com';
 
@@ -28,8 +28,7 @@ export class VoiceCallComponent implements OnInit, AfterContentInit {
   };
 
   constructor(private voiceCallService: CallService) {}
-
-  async ngAfterContentInit(): Promise<void> {
+  async initializeCall() {
     ZoomMtg.setZoomJSLib('https://source.zoom.us/lib', '/av');
     ZoomMtg.preLoadWasm();
     ZoomMtg.prepareWebSDK();
@@ -38,7 +37,8 @@ export class VoiceCallComponent implements OnInit, AfterContentInit {
       const meetingResponse: any = await this.voiceCallService
         .createMeeting(this.requestBody)
         .toPromise();
-      const { id: meetingNumber, password } = meetingResponse.data;
+      const { id: meetingNumber, password, join_url } = meetingResponse.data;
+      console.log('join_url', join_url);
 
       const signature = await this.generateZoomSignature(meetingNumber);
       await this.initZoomMeeting(signature, meetingNumber, password);
@@ -46,6 +46,9 @@ export class VoiceCallComponent implements OnInit, AfterContentInit {
       console.error('Error creating or joining Zoom meeting:', error);
     }
   }
+  // async ngAfterContentInit(): Promise<void> {
+
+  // }
 
   private generateZoomSignature(meetingNumber: string): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -66,6 +69,11 @@ export class VoiceCallComponent implements OnInit, AfterContentInit {
     password: string
   ): Promise<void> {
     return new Promise((resolve, reject) => {
+      const element = document.getElementById('zmmtg-root');
+      if (element !== null) {
+        element.style.display = 'block';
+        element.style.zIndex = (0).toString();
+      }
       ZoomMtg.init({
         leaveUrl: this.meetConfig.leaveUrl,
         success: () => {
@@ -86,5 +94,11 @@ export class VoiceCallComponent implements OnInit, AfterContentInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const element = document.getElementById('zmmtg-root');
+    if (element) {
+      element.style.zIndex = (-2).toString();
+      element.style.background = 'none';
+    }
+  }
 }
